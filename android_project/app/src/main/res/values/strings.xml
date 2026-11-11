@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Apple Music</string>
+    <string name="tab_listen_now">Listen Now</string>
+    <string name="tab_library">Library</string>
+    <string name="tab_search">Search</string>
+    <string name="scan_music">Scan Device Storage</string>
+    <string name="grant_permission">Grant Audio Access</string>
+    <string name="permission_rationale">Apple Music needs permission to scan and play lossless audio files from your device storage.</string>
+</resources>

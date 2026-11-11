@@ -397,7 +397,7 @@ export const AppleSettingsModal: React.FC<AppleSettingsModalProps> = ({
           </div>
 
           {/* ========================================================= */}
-          {/* 4. ANDROID NATIVE APP SYSTEM                              */}
+          {/* 4. ANDROID NATIVE APP SYSTEM & SOURCE DOWNLOAD            */}
           {/* ========================================================= */}
           <div className="glass-card rounded-3xl p-5 border border-white/[0.12] space-y-3">
             <div className="flex items-center justify-between">
@@ -408,42 +408,49 @@ export const AppleSettingsModal: React.FC<AppleSettingsModalProps> = ({
                 <div>
                   <h4 className="text-sm font-bold text-white tracking-tight">Android Native Integration</h4>
                   <p className="text-xs text-[#8e8e93]">
-                    {isInstalled
-                      ? 'Running as Standalone Android App'
-                      : 'Install to Android Home Screen & App Drawer'}
+                    100% Native Jetpack Compose & Media3 Project
                   </p>
                 </div>
               </div>
 
-              {isInstallable ? (
-                <button
-                  onClick={install}
-                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all shadow-md shadow-emerald-500/30 active:scale-95"
-                >
-                  <DownloadCloud className="w-3.5 h-3.5" />
-                  <span>Install App</span>
-                </button>
-              ) : (
-                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full">
-                  100% ANDROID
-                </span>
-              )}
+              <a
+                href="/LocalTune_GitHub_Starter_Fresh_Repo.zip"
+                download="LocalTune_GitHub_Starter_Fresh_Repo.zip"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all shadow-md shadow-emerald-500/30 active:scale-95"
+              >
+                <DownloadCloud className="w-3.5 h-3.5" />
+                <span>Download Project ZIP</span>
+              </a>
             </div>
 
-            <div className="text-[11px] text-[#8e8e93] leading-relaxed pt-1 space-y-1">
+            <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.08] space-y-1.5 text-[11px]">
               <div className="flex items-center justify-between">
-                <span>Android MediaSession Lockscreen:</span>
-                <span className="text-white font-mono font-medium">Active (Hardware Keys)</span>
+                <span className="text-[#8e8e93]">Architecture:</span>
+                <span className="text-white font-mono font-medium">Kotlin · Jetpack Compose · Media3</span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Hardware Audio Driver:</span>
-                <span className="text-white font-mono font-medium">Direct DAC Linear PCM</span>
+                <span className="text-[#8e8e93]">Gradle & JDK:</span>
+                <span className="text-white font-mono font-medium">Gradle 8.9 · JDK 17 · SDK 35</span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Android Back Gesture:</span>
-                <span className="text-white font-mono font-medium">Hardware Popstate Handled</span>
+                <span className="text-[#8e8e93]">Background Service:</span>
+                <span className="text-white font-mono font-medium">MediaSessionService + Lockscreen Notification</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#8e8e93]">Storage Scanner:</span>
+                <span className="text-white font-mono font-medium">MediaStore.Audio (FLAC/ALAC/WAV/AAC)</span>
               </div>
             </div>
+
+            {isInstallable && (
+              <button
+                onClick={install}
+                className="w-full py-2.5 rounded-2xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all active:scale-98"
+              >
+                <Smartphone className="w-3.5 h-3.5" />
+                <span>Install Standalone PWA to Android Device</span>
+              </button>
+            )}
           </div>
 
         </div>

@@ -4,9 +4,9 @@
  */
 
 import React from 'react';
-import { PlayCircle, Compass, FolderHeart, Search } from 'lucide-react';
+import { PlayCircle, FolderHeart, Search } from 'lucide-react';
 
-export type AppleTab = 'listen_now' | 'browse' | 'library' | 'search';
+export type AppleTab = 'listen_now' | 'library' | 'search';
 
 interface AppleBottomTabBarProps {
   activeTab: AppleTab;
@@ -19,14 +19,13 @@ export const AppleBottomTabBar: React.FC<AppleBottomTabBarProps> = ({
 }) => {
   const tabs = [
     { id: 'listen_now', label: 'Listen Now', icon: PlayCircle },
-    { id: 'browse', label: 'Browse', icon: Compass },
     { id: 'library', label: 'Library', icon: FolderHeart },
     { id: 'search', label: 'Search', icon: Search },
   ] as const;
 
   return (
-    <div className="w-full glass-panel border-t border-white/[0.16] px-2 pt-1.5 pb-2 flex flex-col shrink-0 select-none z-30 shadow-[0_-8px_32px_rgba(0,0,0,0.5)]">
-      <div className="grid grid-cols-4 items-center justify-items-center">
+    <div className="w-full glass-panel border-t border-white/[0.16] px-3 pt-1.5 pb-2 flex flex-col shrink-0 select-none z-30 shadow-[0_-8px_32px_rgba(0,0,0,0.5)]">
+      <div className="grid grid-cols-3 items-center justify-items-center max-w-md mx-auto w-full">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;

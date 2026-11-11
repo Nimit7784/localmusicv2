@@ -14,14 +14,16 @@ export default defineConfig(() => {
         includeAssets: ['icon.svg'],
         manifest: {
           id: '/',
-          name: 'Aura Hi-Fi Music Player',
-          short_name: 'Aura Hi-Fi',
-          description: 'Audiophile local music player for Android with bit-perfect high-fidelity decoding and gapless playback.',
-          theme_color: '#0b0e14',
-          background_color: '#0b0e14',
+          name: 'Apple Music',
+          short_name: 'Music',
+          description: 'Apple Music for Android. Bit-perfect lossless studio audio player with gapless playback engine.',
+          theme_color: '#000000',
+          background_color: '#000000',
           display: 'standalone',
+          orientation: 'portrait',
           start_url: '/',
           scope: '/',
+          categories: ['music', 'audio', 'entertainment'],
           icons: [
             {
               src: '/icon.svg',

@@ -13,19 +13,15 @@ interface BeforeInstallPromptEvent extends Event {
 export function usePWAInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
-  const [isAndroid, setIsAndroid] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
-    // Detect standalone display mode
+    // Detect standalone Android native mode
     const isStandalone =
       window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as unknown as { standalone?: boolean }).standalone === true;
-    setIsInstalled(isStandalone);
+      (window.navigator as unknown as { standalone?: boolean }).standalone === true ||
+      document.referrer.includes('android-app://');
 
-    const ua = window.navigator.userAgent.toLowerCase();
-    setIsAndroid(/android/.test(ua));
-    setIsIOS(/iphone|ipad|ipod/.test(ua));
+    setIsInstalled(isStandalone);
 
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
@@ -61,8 +57,6 @@ export function usePWAInstall() {
   return {
     isInstallable: !!deferredPrompt,
     isInstalled,
-    isAndroid,
-    isIOS,
     install,
   };
 }

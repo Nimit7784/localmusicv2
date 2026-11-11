@@ -6,7 +6,6 @@
 import React, { useEffect, useState } from 'react';
 import { audioEngine, EQ_PRESETS } from './audio/AudioEngine';
 import { AppleBottomTabBar, AppleTab } from './components/AppleBottomTabBar';
-import { AppleBrowseView } from './components/AppleBrowseView';
 import { AppleLibraryView } from './components/AppleLibraryView';
 import { AppleListenNowView } from './components/AppleListenNowView';
 import { AppleMiniPlayer } from './components/AppleMiniPlayer';
@@ -221,18 +220,55 @@ export default function App() {
     setStorageUsage(usage);
   };
 
+  // Android Native Back Gesture & Hardware Button Listener
+  useEffect(() => {
+    const handlePopState = () => {
+      if (isPlayerOpen) {
+        setIsPlayerOpen(false);
+      } else if (isSettingsOpen) {
+        setIsSettingsOpen(false);
+      } else if (isEQOpen) {
+        setIsEQOpen(false);
+      } else if (isQueueOpen) {
+        setIsQueueOpen(false);
+      } else if (isImportOpen) {
+        setIsImportOpen(false);
+      } else if (detailsTrack) {
+        setDetailsTrack(null);
+      } else if (activeTab !== 'library') {
+        setActiveTab('library');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isPlayerOpen, isSettingsOpen, isEQOpen, isQueueOpen, isImportOpen, detailsTrack, activeTab]);
+
+  const openPlayer = () => {
+    window.history.pushState({ modal: 'player' }, '');
+    setIsPlayerOpen(true);
+  };
+
+  const openSettings = () => {
+    window.history.pushState({ modal: 'settings' }, '');
+    setIsSettingsOpen(true);
+  };
+
+  const openImport = () => {
+    window.history.pushState({ modal: 'import' }, '');
+    setIsImportOpen(true);
+  };
+
   return (
-    <div className="w-full min-h-screen bg-[#040406] flex items-center justify-center font-sans antialiased text-white select-none relative overflow-hidden">
+    <div className="w-full h-full h-[100dvh] bg-[#000000] flex flex-col font-sans antialiased text-white select-none relative overflow-hidden">
       
       {/* Background Chromatic Lucid Light Caustics */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#fa2d48]/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[#7c4dff]/20 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute -top-20 right-1/3 w-80 h-80 bg-[#00e5ff]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 -left-20 w-80 h-80 bg-[#fa2d48]/15 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-[#7c4dff]/15 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute -top-10 right-1/4 w-72 h-72 bg-[#00e5ff]/10 rounded-full blur-[90px] pointer-events-none" />
 
-      {/* Mobile Device Glass Canvas:
-          On mobile phones, fills the screen (100vw/100vh).
-          On desktop, renders as a pristine Lucid Glass device with refraction. */}
-      <div className="w-full md:max-w-[430px] md:h-[92vh] md:max-h-[900px] bg-[#0c0c10]/80 backdrop-blur-3xl flex flex-col md:rounded-[48px] md:border md:border-white/[0.18] md:shadow-[0_25px_80px_rgba(0,0,0,0.95),_inset_0_1px_1px_rgba(255,255,255,0.3)] overflow-hidden relative z-10">
+      {/* Android Fullscreen Native App Canvas */}
+      <div className="w-full h-full flex flex-col overflow-hidden relative z-10">
         
         {/* Apple Music Views Router */}
         <div className="flex-1 flex flex-col overflow-y-auto no-scrollbar relative bg-[#000000]">
@@ -241,18 +277,8 @@ export default function App() {
               tracks={tracks}
               sleepTimerState={sleepTimerState}
               onPlayTrack={handlePlayTrack}
-              onOpenImport={() => setIsImportOpen(true)}
-              onOpenSettings={() => setIsSettingsOpen(true)}
-            />
-          )}
-
-          {activeTab === 'browse' && (
-            <AppleBrowseView
-              tracks={tracks}
-              sleepTimerState={sleepTimerState}
-              onPlayTrack={handlePlayTrack}
-              onOpenImport={() => setIsImportOpen(true)}
-              onOpenSettings={() => setIsSettingsOpen(true)}
+              onOpenImport={openImport}
+              onOpenSettings={openSettings}
             />
           )}
 
@@ -267,8 +293,8 @@ export default function App() {
               onAddToQueue={handleAddToQueue}
               onShowDetails={(t) => setDetailsTrack(t)}
               onDeleteTrack={handleDeleteTrack}
-              onOpenImport={() => setIsImportOpen(true)}
-              onOpenSettings={() => setIsSettingsOpen(true)}
+              onOpenImport={openImport}
+              onOpenSettings={openSettings}
             />
           )}
 
@@ -295,7 +321,7 @@ export default function App() {
             duration={duration}
             onTogglePlay={handleTogglePlay}
             onNext={handleNext}
-            onExpand={() => setIsPlayerOpen(true)}
+            onExpand={openPlayer}
           />
         )}
 
@@ -325,9 +351,15 @@ export default function App() {
           onToggleShuffle={handleToggleShuffle}
           onSetVolume={handleSetVolume}
           onSetGaplessMode={handleSetGaplessMode}
-          onOpenEQ={() => setIsEQOpen(true)}
-          onOpenQueue={() => setIsQueueOpen(true)}
-          onOpenSettings={() => setIsSettingsOpen(true)}
+          onOpenEQ={() => {
+            window.history.pushState({ modal: 'eq' }, '');
+            setIsEQOpen(true);
+          }}
+          onOpenQueue={() => {
+            window.history.pushState({ modal: 'queue' }, '');
+            setIsQueueOpen(true);
+          }}
+          onOpenSettings={openSettings}
         />
 
         {/* Apple Settings Modal with Sleep Timer & Audio Engine */}
@@ -342,7 +374,7 @@ export default function App() {
           onToggleBitPerfect={handleToggleBitPerfect}
           onOpenImport={() => {
             setIsSettingsOpen(false);
-            setIsImportOpen(true);
+            openImport();
           }}
           storageUsage={storageUsage}
         />

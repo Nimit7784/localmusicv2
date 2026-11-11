@@ -1,35 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0b0e14" />
-      <stop offset="100%" stop-color="#141923" />
+    <linearGradient id="appleMusicGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fa243c" />
+      <stop offset="50%" stop-color="#fa2d48" />
+      <stop offset="100%" stop-color="#ff3b68" />
     </linearGradient>
-    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fbbf24" />
-      <stop offset="100%" stop-color="#d97706" />
-    </linearGradient>
-    <radialGradient id="ring" cx="50%" cy="50%" r="50%">
-      <stop offset="60%" stop-color="#1e2638" stop-opacity="0" />
-      <stop offset="100%" stop-color="#2a344d" stop-opacity="0.8" />
-    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.3" />
+    </filter>
   </defs>
   
-  <!-- Outer Chassis -->
-  <rect width="512" height="512" rx="128" fill="url(#bg)" />
-  <circle cx="256" cy="256" r="210" fill="none" stroke="#222b3d" stroke-width="4" stroke-dasharray="8 8" opacity="0.6" />
+  <!-- Outer Rounded Squircle with 15% safe padding for Android Maskable Icon -->
+  <rect width="512" height="512" rx="112" fill="url(#appleMusicGrad)" />
   
-  <!-- Vinyl / Turntable Precision Grooves -->
-  <circle cx="256" cy="256" r="180" fill="#0f131c" stroke="#1b212f" stroke-width="2" />
-  <circle cx="256" cy="256" r="150" fill="none" stroke="#161c28" stroke-width="1.5" />
-  <circle cx="256" cy="256" r="120" fill="none" stroke="#161c28" stroke-width="1.5" />
-  <circle cx="256" cy="256" r="90" fill="none" stroke="#161c28" stroke-width="1.5" />
-  
-  <!-- Center Hi-Fi Core -->
-  <circle cx="256" cy="256" r="64" fill="url(#gold)" />
-  <circle cx="256" cy="256" r="24" fill="#0b0e14" />
-  <circle cx="256" cy="256" r="10" fill="#fbbf24" />
+  <!-- Inner Note Glow -->
+  <circle cx="256" cy="256" r="160" fill="white" opacity="0.08" />
 
-  <!-- Acoustic Sine Waves / Soundwave Arc -->
-  <path d="M 130 256 A 126 126 0 0 1 382 256" fill="none" stroke="#f59e0b" stroke-width="6" stroke-linecap="round" opacity="0.9" />
-  <path d="M 160 256 A 96 96 0 0 1 352 256" fill="none" stroke="#fbbf24" stroke-width="4" stroke-linecap="round" opacity="0.7" />
+  <!-- Apple Music Beamed Musical Notes -->
+  <g fill="white" filter="url(#shadow)">
+    <!-- Left Note Head -->
+    <ellipse cx="196" cy="344" rx="44" ry="32" transform="rotate(-20 196 344)" />
+    <!-- Right Note Head -->
+    <ellipse cx="340" cy="308" rx="44" ry="32" transform="rotate(-20 340 308)" />
+    <!-- Left Stem -->
+    <rect x="224" y="152" width="20" height="186" rx="6" />
+    <!-- Right Stem -->
+    <rect x="368" y="116" width="20" height="186" rx="6" />
+    <!-- Connecting Top Beam -->
+    <path d="M 224 152 L 388 116 L 388 162 L 224 198 Z" />
+    <!-- Inner Top Cutout Contour -->
+    <path d="M 224 212 L 388 176 L 388 184 L 224 220 Z" opacity="0.25" fill="#fa2d48" />
+  </g>
 </svg>

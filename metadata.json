@@ -1,0 +1,6 @@
+{
+  "name": "Aura Hi-Fi Music Player",
+  "description": "Audiophile local music player engineered for Android with bit-perfect high-fidelity decoding, gapless audio engine, and a clean minimalist studio interface.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

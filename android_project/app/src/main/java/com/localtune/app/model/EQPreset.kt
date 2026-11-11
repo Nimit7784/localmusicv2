@@ -61,5 +61,8 @@ data class EQPreset(
                 gains = floatArrayOf(1.0f, 0.5f, 0f, -0.5f, 0f, 0.5f, 1.5f, 2.5f, 4.0f, 5.0f)
             )
         )
+
+        val DEFAULT_PRESETS: List<EQPreset>
+            get() = PRESETS
     }
 }

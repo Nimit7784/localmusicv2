@@ -17,7 +17,7 @@ class EqualizerController {
     private val _bandLevels = MutableStateFlow(List(10) { 0f })
     val bandLevels: StateFlow<List<Float>> = _bandLevels.asStateFlow()
 
-    private val _currentPreset = MutableStateFlow(EQPreset.DEFAULT_PRESETS.first())
+    private val _currentPreset = MutableStateFlow(EQPreset.PRESETS.first())
     val currentPreset: StateFlow<EQPreset> = _currentPreset.asStateFlow()
 
     fun bindAudioSession(audioSessionId: Int) {
@@ -57,7 +57,7 @@ class EqualizerController {
         _currentPreset.value = preset
         val updated = _bandLevels.value.toMutableList()
         for (i in updated.indices) {
-            updated[i] = preset.gains.getOrElse(i) { 0f }
+            updated[i] = if (i in preset.gains.indices) preset.gains[i] else 0f
         }
         _bandLevels.value = updated
         applyBandsToHardware()

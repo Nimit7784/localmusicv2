@@ -185,12 +185,12 @@ fun SearchScreen(
                         .padding(horizontal = 20.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    genres.chunked(2).forEach { rowGenres ->
+                    for (rowGenres in genres.chunked(2)) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
-                            rowGenres.forEach { (title, color) ->
+                            for ((title, color) in rowGenres) {
                                 Box(
                                     modifier = Modifier
                                         .weight(1f)

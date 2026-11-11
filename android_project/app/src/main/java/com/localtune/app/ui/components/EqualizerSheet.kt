@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.localtune.app.R
@@ -127,8 +128,8 @@ fun EqualizerSheet(
                     .horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                EQPreset.DEFAULT_PRESETS.forEach { preset ->
-                    val isSelected = currentPreset.name == preset.name
+                for (preset in EQPreset.PRESETS) {
+                    val isSelected = currentPreset.id == preset.id
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(20.dp))
@@ -194,7 +195,7 @@ fun EqualizerSheet(
                                 color = TextMuted,
                                 fontSize = 10.sp,
                                 modifier = Modifier.width(42.dp),
-                                textAlign = androidx.compose.ui.text.style.TextAlign.End
+                                textAlign = TextAlign.End
                             )
                         }
                     }

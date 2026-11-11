@@ -10,7 +10,9 @@ data class SleepTimerState(
     val mode: SleepTimerMode = SleepTimerMode.OFF,
     val remainingSeconds: Int = 0,
     val totalSeconds: Int = 0,
-    val active: Boolean = false
+    val active: Boolean = false,
+    val isActive: Boolean = active,
+    val stopAtTrackEnd: Boolean = (mode == SleepTimerMode.TRACK_END)
 ) {
     val formattedRemaining: String
         get() {

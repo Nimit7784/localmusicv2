@@ -14,7 +14,9 @@ data class AudioEngineSettings(
     val isBitPerfect: Boolean = false,
     val currentPresetId: String = "flat",
     val customBandGains: FloatArray = FloatArray(10) { 0f },
-    val screenWakeLock: Boolean = false
+    val screenWakeLock: Boolean = false,
+    val gapless: Boolean = (gaplessMode != GaplessMode.CROSSFADE),
+    val float32BitEngine: Boolean = true
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -30,6 +32,8 @@ data class AudioEngineSettings(
         if (currentPresetId != other.currentPresetId) return false
         if (!customBandGains.contentEquals(other.customBandGains)) return false
         if (screenWakeLock != other.screenWakeLock) return false
+        if (gapless != other.gapless) return false
+        if (float32BitEngine != other.float32BitEngine) return false
 
         return true
     }
@@ -43,6 +47,8 @@ data class AudioEngineSettings(
         result = 31 * result + currentPresetId.hashCode()
         result = 31 * result + customBandGains.contentHashCode()
         result = 31 * result + screenWakeLock.hashCode()
+        result = 31 * result + gapless.hashCode()
+        result = 31 * result + float32BitEngine.hashCode()
         return result
     }
 }

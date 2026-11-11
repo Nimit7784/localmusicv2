@@ -258,7 +258,7 @@ fun AppleSettingsModal(
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
-                                text = "${settings.crossfadeDurationSec}s",
+                                text = "${settings.crossfadeDurationSec.toInt()}s",
                                 color = AppleCrimson,
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold
@@ -266,8 +266,8 @@ fun AppleSettingsModal(
                         }
 
                         Slider(
-                            value = settings.crossfadeDurationSec.toFloat(),
-                            onValueChange = { onUpdateSettings(settings.copy(crossfadeDurationSec = it.toInt())) },
+                            value = settings.crossfadeDurationSec,
+                            onValueChange = { onUpdateSettings(settings.copy(crossfadeDurationSec = it)) },
                             valueRange = 0f..12f,
                             steps = 11,
                             colors = SliderDefaults.colors(

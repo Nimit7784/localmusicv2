@@ -1,5 +1,6 @@
 package com.localtune.app.playback
 
+import com.localtune.app.model.SleepTimerMode
 import com.localtune.app.model.SleepTimerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,9 +25,11 @@ class SleepTimerManager(
         val totalSeconds = minutes * 60
 
         _timerState.value = SleepTimerState(
-            isActive = true,
-            totalSeconds = totalSeconds,
+            mode = SleepTimerMode.DURATION,
             remainingSeconds = totalSeconds,
+            totalSeconds = totalSeconds,
+            active = true,
+            isActive = true,
             stopAtTrackEnd = false
         )
 
@@ -35,15 +38,15 @@ class SleepTimerManager(
                 delay(1000L)
                 val currentRemaining = _timerState.value.remainingSeconds - 1
                 if (currentRemaining <= 0) {
-                    _timerState.value = _timerState.value.copy(
-                        isActive = false,
-                        remainingSeconds = 0
-                    )
+                    _timerState.value = SleepTimerState()
                     onTimerExpired(3000L) // 3-second gentle fade-out
                     break
                 } else {
                     _timerState.value = _timerState.value.copy(
-                        remainingSeconds = currentRemaining
+                        remainingSeconds = currentRemaining,
+                        active = true,
+                        isActive = true,
+                        stopAtTrackEnd = false
                     )
                 }
             }
@@ -53,9 +56,11 @@ class SleepTimerManager(
     fun setStopAtTrackEnd(enabled: Boolean) {
         countdownJob?.cancel()
         _timerState.value = SleepTimerState(
-            isActive = enabled,
+            mode = if (enabled) SleepTimerMode.TRACK_END else SleepTimerMode.OFF,
             totalSeconds = 0,
             remainingSeconds = 0,
+            active = enabled,
+            isActive = enabled,
             stopAtTrackEnd = enabled
         )
     }

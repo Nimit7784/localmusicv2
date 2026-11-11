@@ -172,7 +172,7 @@ fun SleepTimerSheet(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                presets.take(4).forEach { min ->
+                for (min in presets.take(4)) {
                     Box(
                         modifier = Modifier
                             .weight(1f)
@@ -202,7 +202,7 @@ fun SleepTimerSheet(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                presets.drop(4).forEach { min ->
+                for (min in presets.drop(4)) {
                     Box(
                         modifier = Modifier
                             .weight(1f)

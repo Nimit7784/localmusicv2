@@ -12,6 +12,8 @@ import kotlinx.coroutines.withContext
 
 class MusicScanner(private val context: Context) {
 
+    suspend fun scanAudioFiles(): List<AudioTrack> = scanLocalAudioFiles()
+
     suspend fun scanLocalAudioFiles(): List<AudioTrack> = withContext(Dispatchers.IO) {
         val tracks = mutableListOf<AudioTrack>()
         val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

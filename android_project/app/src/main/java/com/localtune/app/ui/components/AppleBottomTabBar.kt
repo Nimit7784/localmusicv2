@@ -54,7 +54,7 @@ fun AppleBottomTabBar(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        NavigationTab.values().forEach { tab ->
+        for (tab in NavigationTab.values()) {
             val isSelected = tab == selectedTab
             val interactionSource = remember { MutableInteractionSource() }
 
@@ -67,7 +67,7 @@ fun AppleBottomTabBar(
                         onClick = { onTabSelected(tab) }
                     )
                     .padding(horizontal = 20.dp, vertical = 6.dp),
-                horizontalAlignment = Alignment.CenterVertically,
+                horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Icon(

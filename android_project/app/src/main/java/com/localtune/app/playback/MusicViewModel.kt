@@ -71,8 +71,8 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
     private val _repeatMode = MutableStateFlow(Player.REPEAT_MODE_OFF)
     val repeatMode: StateFlow<Int> = _repeatMode.asStateFlow()
 
-    private val _favorites = MutableStateFlow<Set<Long>>(emptySet())
-    val favorites: StateFlow<Set<Long>> = _favorites.asStateFlow()
+    private val _favorites = MutableStateFlow<Set<String>>(emptySet())
+    val favorites: StateFlow<Set<String>> = _favorites.asStateFlow()
 
     private val _queue = MutableStateFlow<List<AudioTrack>>(emptyList())
     val queue: StateFlow<List<AudioTrack>> = _queue.asStateFlow()
@@ -113,7 +113,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                     }
 
                     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-                        val trackId = mediaItem?.mediaId?.toLongOrNull()
+                        val trackId = mediaItem?.mediaId
                         val track = _tracks.value.find { it.id == trackId }
                         _currentTrack.value = track
                         sleepTimer.onTrackCompleted()
@@ -134,7 +134,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
     fun scanMusic() {
         viewModelScope.launch(Dispatchers.IO) {
             _isScanning.value = true
-            val scanned = scanner.scanAudioFiles()
+            val scanned = scanner.scanLocalAudioFiles()
             _tracks.value = scanned
             _isScanning.value = false
         }
@@ -209,7 +209,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         controller.repeatMode = nextMode
     }
 
-    fun toggleFavorite(trackId: Long) {
+    fun toggleFavorite(trackId: String) {
         val current = _favorites.value.toMutableSet()
         if (current.contains(trackId)) {
             current.remove(trackId)
